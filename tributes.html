@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Tribute to Sir Dave | PIMA</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
+            cinzel: ['"Cinzel"', 'serif'],
+          },
+          colors: {
+            wood: {
+              50: '#fdf8f5',
+              100: '#f7ede2',
+              200: '#edd5be',
+              300: '#dfb794',
+              500: '#b87333',
+              700: '#6f3d1b',
+              800: '#4a2511',
+              900: '#2b1408',
+              950: '#170a04',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .guitar-dark {
+      background: radial-gradient(circle at 50% 20%, #3a1a0b 0%, #1c0c05 65%, #0d0502 100%);
+    }
+    .wood-card {
+      background: linear-gradient(145deg, #ffffff, #fcf9f6);
+      border: 1px solid #ebdcd0;
+    }
+    .fret-line {
+      background: linear-gradient(90deg, transparent, rgba(223, 183, 148, 0.35), transparent);
+      height: 1px;
+    }
+    .tribute-card {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .tribute-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px -5px rgba(43, 20, 8, 0.08);
+    }
+  </style>
+</head>
+<body class="bg-[#fcfaf7] text-stone-800 font-sans antialiased selection:bg-amber-600 selection:text-white">
+
+  <!-- HERO BANNER -->
+  <header id="section-hero" class="guitar-dark text-white pt-16 pb-20 px-6 text-center relative overflow-hidden border-b border-wood-800">
+    <div class="fret-line absolute top-6 left-0 right-0"></div>
+    <div class="fret-line absolute bottom-6 left-0 right-0 opacity-40"></div>
+
+    <div class="max-w-3xl mx-auto relative z-10">
+      <div class="inline-flex items-center gap-2 bg-amber-500/15 border border-amber-500/40 text-amber-300 text-xs font-semibold px-4 py-1.5 rounded-full mb-4 tracking-wider uppercase font-cinzel">
+        <i data-lucide="award" class="w-3.5 h-3.5 text-amber-400"></i> Dedicated to Sir Dave &bull; PIMA
+      </div>
+      <h1 id="live-hero-headline" class="text-3xl sm:text-5xl font-extrabold font-cinzel text-amber-100 mb-3">
+        Cheers to the Next Track, Sir Dave! 🎸
+      </h1>
+      <p class="text-stone-300 text-sm sm:text-base max-w-xl mx-auto font-serif italic leading-relaxed">
+        A special digital keepsake honoring your journey, dedication, and memories with the PIMA family.
+      </p>
+
+      <!-- In-Page Quick Navigation Only -->
+      <div class="flex flex-wrap items-center justify-center gap-3 mt-8 text-xs">
+        <a href="#videos" class="bg-wood-900/90 hover:bg-wood-800 text-amber-200 border border-amber-500/30 px-4 py-2 rounded-full transition flex items-center gap-1.5 font-medium">
+          <i data-lucide="video" class="w-3.5 h-3.5 text-amber-400"></i> Video Greetings
+        </a>
+        <a href="#photos" class="bg-wood-900/90 hover:bg-wood-800 text-amber-200 border border-amber-500/30 px-4 py-2 rounded-full transition flex items-center gap-1.5 font-medium">
+          <i data-lucide="camera" class="w-3.5 h-3.5 text-amber-400"></i> Photo Memories
+        </a>
+        <a href="#messages" class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 font-bold px-4 py-2 rounded-full transition flex items-center gap-1.5 shadow">
+          <i data-lucide="message-square" class="w-3.5 h-3.5"></i> Team Messages
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 1. VIDEO GREETINGS -->
+  <section id="section-videos" class="py-16 px-6 max-w-6xl mx-auto">
+    <div id="videos" class="text-center mb-10 scroll-mt-6">
+      <span class="text-xs font-bold text-amber-700 uppercase tracking-widest font-cinzel">Part 1</span>
+      <h2 class="text-2xl sm:text-3xl font-bold font-serif text-wood-950 mt-1">Video Greetings &amp; Messages</h2>
+      <p class="text-stone-600 text-xs sm:text-sm max-w-md mx-auto mt-1">Special send-off messages from leadership and teammates.</p>
+      <div class="w-12 h-1 bg-amber-600 mx-auto mt-3 rounded-full"></div>
+    </div>
+
+    <!-- Featured Owner/Lead Video -->
+    <div class="wood-card rounded-2xl p-5 sm:p-7 shadow-sm mb-8 border border-wood-200">
+      <div class="grid md:grid-cols-12 gap-6 items-center">
+        <div class="md:col-span-7 aspect-video bg-wood-950 rounded-xl overflow-hidden shadow-inner border border-wood-800">
+          <video id="live-owner-video" controls class="w-full h-full object-cover" poster="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80">
+            <source id="live-owner-source" src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div class="md:col-span-5">
+          <span class="text-[11px] font-bold uppercase tracking-wider text-amber-600 font-cinzel">Owner &amp; Leadership Spotlight</span>
+          <h3 class="text-xl font-bold font-serif text-wood-950 mt-1">A Word for Sir Dave</h3>
+          <p id="live-owner-quote" class="text-sm text-stone-700 mt-2 leading-relaxed">
+            "Dave, thank you for all the passion, leadership, and energy you brought to PIMA through the years. We wish you massive success on your next venture!"
+          </p>
+          <div class="mt-4 text-xs font-bold text-wood-900 border-t border-wood-200 pt-3">
+            PIMA Management &bull; Legazpi City
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team Greeting Grid -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="wood-card rounded-xl overflow-hidden shadow-sm">
+        <div class="aspect-video bg-wood-950">
+          <video controls class="w-full h-full object-cover">
+            <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div class="p-4">
+          <h4 class="font-bold text-wood-950 text-sm">Tech &amp; Engineering Team</h4>
+          <p class="text-xs text-stone-600 mt-1">"Para sa aming mentor at kasama sa bawat sprint! Padayon Sir Dave!"</p>
+        </div>
+      </div>
+
+      <div class="wood-card rounded-xl overflow-hidden shadow-sm">
+        <div class="aspect-video bg-wood-950">
+          <video controls class="w-full h-full object-cover">
+            <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div class="p-4">
+          <h4 class="font-bold text-wood-950 text-sm">Creative &amp; Design Crew</h4>
+          <p class="text-xs text-stone-600 mt-1">"Thank you for the guidance, patience, and good energy always!"</p>
+        </div>
+      </div>
+
+      <div class="wood-card rounded-xl overflow-hidden shadow-sm">
+        <div class="aspect-video bg-wood-950">
+          <video controls class="w-full h-full object-cover">
+            <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div class="p-4">
+          <h4 class="font-bold text-wood-950 text-sm">Operations &amp; Support</h4>
+          <p class="text-xs text-stone-600 mt-1">"Mamimiss namin ang kapehan at tawanan tuwing hapon!"</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. PHOTO GALLERY OF MEMORIES -->
+  <section id="section-photos" class="py-16 bg-wood-100/70 border-y border-wood-200 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div id="photos" class="text-center mb-10 scroll-mt-6">
+        <span class="text-xs font-bold text-amber-700 uppercase tracking-widest font-cinzel">Part 2</span>
+        <h2 class="text-2xl sm:text-3xl font-bold font-serif text-wood-950 mt-1">Images of Memories</h2>
+        <p class="text-stone-600 text-xs sm:text-sm max-w-md mx-auto mt-1">Snapshots from milestones, office sessions, and team bondings.</p>
+        <div class="w-12 h-1 bg-amber-600 mx-auto mt-3 rounded-full"></div>
+      </div>
+
+      <div id="live-photos-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        <!-- Injected via syncState -->
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. TEAM MESSAGES & DEDICATIONS (READ-ONLY DISPLAY) -->
+  <section id="section-messages" class="py-16 px-6 max-w-6xl mx-auto">
+    <div id="messages" class="text-center mb-10 scroll-mt-6">
+      <span class="text-xs font-bold text-amber-700 uppercase tracking-widest font-cinzel">Part 3</span>
+      <h2 class="text-2xl sm:text-3xl font-bold font-serif text-wood-950 mt-1">Messages from the PIMA Team</h2>
+      <p class="text-stone-600 text-xs sm:text-sm max-w-md mx-auto mt-1">Heartfelt parting messages, thank-you notes, and memories curated for you.</p>
+      <div class="w-12 h-1 bg-amber-600 mx-auto mt-3 rounded-full"></div>
+    </div>
+
+    <!-- Read-Only Wall Grid -->
+    <div id="messages-wall" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <!-- Injected via syncState -->
+    </div>
+  </section>
+
+  <!-- FOOTER (STRICTLY NO EXTERNAL / ADMIN LINKS) -->
+  <footer class="bg-wood-950 text-stone-400 py-10 px-6 text-center text-xs border-t border-wood-900">
+    <div class="font-cinzel text-amber-200 text-sm mb-1">Once PIMA, Always PIMA.</div>
+    <div class="text-stone-500">Despedida Gathering at Gabbi's, Daraga &bull; Saturday, 6:00 PM Onwards</div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    const defaultData = {
+      visibility: { hero: true, videos: true, photos: true, messages: true },
+      hero: {
+        headline: "Cheers to the Next Track, Sir Dave! 🎸",
+        quote: "Dave, thank you for all the energy and dedication you brought to PIMA through the years. We are super excited for where your career takes you next—rock on!"
+      },
+      video: {
+        ownerUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        posterUrl: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80"
+      },
+      photos: [
+        { url: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=500&q=80", caption: "Team Sprints & Planning" },
+        { url: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=500&q=80", caption: "Team Outings & Celebrations" },
+        { url: "https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=500&q=80", caption: "Coffee Breaks & Discussions" },
+        { url: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=500&q=80", caption: "Project Launch Milestones" }
+      ],
+      messages: [
+        { id: 1, name: "Engr. Alex", role: "Frontend Developer", text: "Thank you so much Sir Dave for all the patience and technical guidance mula nung nag-umpisa kami sa team. All the best po sa next venture niyo!" },
+        { id: 2, name: "Claire", role: "UI/UX Designer", text: "Mamimiss namin yung jokes at coffee discussions tuwing hapon Sir Dave! Salamat sa walang kupas na good vibes!" },
+        { id: 3, name: "Joshua & Tech Team", role: "Engineering Team", text: "Sir Dave, napakalaking tulong mo sa paghubog ng PIMA. Solid mentor and true friend to all of us. Padayon po!" }
+      ]
+    };
+
+    function syncState() {
+      const state = JSON.parse(localStorage.getItem('pima_tribute_config')) || defaultData;
+
+      document.getElementById('section-hero').style.display = state.visibility.hero ? 'block' : 'none';
+      document.getElementById('section-videos').style.display = state.visibility.videos ? 'block' : 'none';
+      document.getElementById('section-photos').style.display = state.visibility.photos ? 'block' : 'none';
+      document.getElementById('section-messages').style.display = state.visibility.messages ? 'block' : 'none';
+
+      document.getElementById('live-hero-headline').innerText = state.hero.headline;
+      document.getElementById('live-owner-quote').innerText = `"${state.hero.quote}"`;
+
+      const videoEl = document.getElementById('live-owner-video');
+      const sourceEl = document.getElementById('live-owner-source');
+      if (videoEl && videoEl.poster !== state.video.posterUrl) videoEl.poster = state.video.posterUrl;
+      if (sourceEl && sourceEl.src !== state.video.ownerUrl) {
+        sourceEl.src = state.video.ownerUrl;
+        videoEl.load();
+      }
+
+      const photosGrid = document.getElementById('live-photos-grid');
+      photosGrid.innerHTML = state.photos.map(p => `
+        <div class="group relative rounded-xl overflow-hidden aspect-square bg-wood-950 shadow-sm border border-wood-300">
+          <img src="${p.url}" alt="${p.caption}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+          <div class="absolute inset-0 bg-gradient-to-t from-wood-950/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition p-3 flex items-end">
+            <span class="text-xs text-amber-200 font-medium">${p.caption}</span>
+          </div>
+        </div>
+      `).join('');
+
+      renderWall(state.messages);
+    }
+
+    function renderWall(messages) {
+      const wall = document.getElementById('messages-wall');
+      const styles = [
+        { bg: 'bg-wood-50', border: 'border-wood-200', avatarBg: 'bg-amber-600', avatarText: 'text-white' },
+        { bg: 'bg-amber-50/80', border: 'border-amber-200', avatarBg: 'bg-wood-800', avatarText: 'text-amber-300' },
+        { bg: 'bg-[#f7ede2]', border: 'border-wood-300', avatarBg: 'bg-amber-700', avatarText: 'text-white' }
+      ];
+
+      wall.innerHTML = messages.map((m, idx) => {
+        const style = styles[idx % styles.length];
+        const initial = m.name.charAt(0).toUpperCase();
+        return `
+          <div class="tribute-card ${style.bg} ${style.border} border rounded-xl p-5 shadow-sm">
+            <p class="text-stone-800 text-sm leading-relaxed mb-4">"${escapeHtml(m.text)}"</p>
+            <div class="flex items-center gap-2.5 border-t border-wood-200/80 pt-3">
+              <div class="w-7 h-7 rounded-full ${style.avatarBg} ${style.avatarText} text-xs font-bold flex items-center justify-center font-cinzel">${initial}</div>
+              <div>
+                <div class="text-xs font-bold text-wood-950">${escapeHtml(m.name)}</div>
+                <div class="text-[10px] text-stone-500">${escapeHtml(m.role)}</div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function escapeHtml(str) {
+      return String(str).replace(/[&<>"']/g, function (m) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
+      });
+    }
+
+    window.onload = syncState;
+    window.addEventListener('storage', syncState);
+  </script>
+</body>
+</html>

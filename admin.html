@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PIMA Tribute Admin | Secure Control Panel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            cinzel: ['"Cinzel"', 'serif'],
+          },
+          colors: {
+            wood: {
+              800: '#4a2511',
+              900: '#2b1408',
+              950: '#170a04',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans antialiased min-h-screen">
+
+  <!-- 1. AUTHENTICATION / LOGIN SCREEN (Visible when logged out) -->
+  <div id="login-gate" class="fixed inset-0 z-50 bg-wood-950 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-sm w-full p-8 shadow-2xl border border-slate-200 text-center">
+      <div class="w-12 h-12 bg-amber-500 rounded-full flex items-center justify-center mx-auto mb-4 text-wood-950 font-cinzel font-bold text-xl">
+        P
+      </div>
+      <h2 class="text-xl font-bold font-cinzel text-slate-900">Admin Authentication</h2>
+      <p class="text-xs text-slate-500 mt-1 mb-6">Enter password to manage Sir Dave's tribute page.</p>
+
+      <form onsubmit="handleLogin(event)" class="space-y-4">
+        <div>
+          <input type="password" id="admin-pass" required placeholder="Enter passcode" class="w-full text-sm px-4 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500 text-center" />
+        </div>
+        <p id="login-error" class="text-xs text-red-600 hidden font-semibold">Incorrect passcode. Try again.</p>
+        <button type="submit" class="w-full bg-wood-900 hover:bg-wood-800 text-amber-200 font-bold text-sm py-2.5 rounded-lg transition shadow">
+          Unlock Dashboard
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. MAIN ADMIN DASHBOARD (Hidden until authenticated) -->
+  <div id="admin-app" class="hidden">
+    <!-- NAVBAR -->
+    <nav class="bg-wood-950 text-white border-b border-wood-800 px-6 py-4 sticky top-0 z-40">
+      <div class="max-w-6xl mx-auto flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <span class="w-8 h-8 rounded-full bg-amber-500 text-wood-950 font-cinzel font-bold flex items-center justify-center text-sm">P</span>
+          <div>
+            <h1 class="text-sm font-bold text-amber-200">PIMA Tribute Master Control</h1>
+            <p class="text-[10px] text-slate-400">Managing live content for Sir Dave's Page</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <a href="tributes.html" target="_blank" class="bg-amber-500 hover:bg-amber-400 text-wood-950 text-xs font-bold px-3.5 py-1.5 rounded-lg transition flex items-center gap-1.5 shadow">
+            <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Open Live Tribute Page
+          </a>
+          <button onclick="handleLogout()" class="bg-slate-800 hover:bg-red-700 text-slate-200 text-xs font-bold px-3 py-1.5 rounded-lg transition flex items-center gap-1">
+            <i data-lucide="log-out" class="w-3.5 h-3.5"></i> Logout
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto p-6 space-y-8 pb-16">
+
+      <!-- SECTION VISIBILITY TOGGLES -->
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+        <div class="flex items-center gap-2 mb-4 border-b border-slate-100 pb-3">
+          <i data-lucide="eye" class="w-5 h-5 text-amber-600"></i>
+          <h2 class="text-base font-bold text-slate-900">Section Visibility Toggles</h2>
+        </div>
+        
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <label class="flex items-center justify-between p-4 rounded-xl border border-slate-200 bg-slate-50 cursor-pointer hover:bg-slate-100 transition">
+            <div>
+              <span class="text-xs font-bold text-slate-800 block">Hero Banner</span>
+              <span class="text-[11px] text-slate-500">Header &amp; Title</span>
+            </div>
+            <input type="checkbox" id="show-hero" class="w-5 h-5 accent-amber-600" onchange="saveVisibility()" />
+          </label>
+
+          <label class="flex items-center justify-between p-4 rounded-xl border border-slate-200 bg-slate-50 cursor-pointer hover:bg-slate-100 transition">
+            <div>
+              <span class="text-xs font-bold text-slate-800 block">Video Greetings</span>
+              <span class="text-[11px] text-slate-500">Owner &amp; Team Videos</span>
+            </div>
+            <input type="checkbox" id="show-videos" class="w-5 h-5 accent-amber-600" onchange="saveVisibility()" />
+          </label>
+
+          <label class="flex items-center justify-between p-4 rounded-xl border border-slate-200 bg-slate-50 cursor-pointer hover:bg-slate-100 transition">
+            <div>
+              <span class="text-xs font-bold text-slate-800 block">Memory Photos</span>
+              <span class="text-[11px] text-slate-500">Photo gallery grid</span>
+            </div>
+            <input type="checkbox" id="show-photos" class="w-5 h-5 accent-amber-600" onchange="saveVisibility()" />
+          </label>
+
+          <label class="flex items-center justify-between p-4 rounded-xl border border-slate-200 bg-slate-50 cursor-pointer hover:bg-slate-100 transition">
+            <div>
+              <span class="text-xs font-bold text-slate-800 block">Message Wall</span>
+              <span class="text-[11px] text-slate-500">Team farewell notes</span>
+            </div>
+            <input type="checkbox" id="show-messages" class="w-5 h-5 accent-amber-600" onchange="saveVisibility()" />
+          </label>
+        </div>
+      </div>
+
+      <!-- MEDIA & TEXT SETTINGS -->
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+          <div class="flex items-center gap-2 mb-4 border-b border-slate-100 pb-3">
+            <i data-lucide="type" class="w-5 h-5 text-amber-600"></i>
+            <h2 class="text-base font-bold text-slate-900">Hero Headlines &amp; Quotes</h2>
+          </div>
+          <form onsubmit="saveHeroContent(event)" class="space-y-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Headline Text</label>
+              <input type="text" id="hero-headline" class="w-full text-xs px-3 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Owner Spotlight Speech / Quote</label>
+              <textarea id="owner-quote" rows="3" class="w-full text-xs px-3 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none"></textarea>
+            </div>
+            <button type="submit" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-4 py-2 rounded-lg transition">
+              Save Text Updates
+            </button>
+          </form>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+          <div class="flex items-center gap-2 mb-4 border-b border-slate-100 pb-3">
+            <i data-lucide="video" class="w-5 h-5 text-amber-600"></i>
+            <h2 class="text-base font-bold text-slate-900">Featured Video Source</h2>
+          </div>
+          <form onsubmit="saveVideoSettings(event)" class="space-y-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Owner Video URL (MP4 / Web Video)</label>
+              <input type="url" id="owner-video-url" class="w-full text-xs px-3 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Video Poster Image URL</label>
+              <input type="url" id="owner-poster-url" class="w-full text-xs px-3 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none" />
+            </div>
+            <button type="submit" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-4 py-2 rounded-lg transition">
+              Save Video Source
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- TEAM MESSAGES MANAGER (ADD / EDIT / DELETE) -->
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+        <div class="flex items-center justify-between mb-4 border-b border-slate-100 pb-3">
+          <div class="flex items-center gap-2">
+            <i data-lucide="message-square" class="w-5 h-5 text-amber-600"></i>
+            <h2 class="text-base font-bold text-slate-900">Team Messages for Sir Dave</h2>
+          </div>
+          <button onclick="toggleAddMessageModal()" class="text-xs bg-amber-500 hover:bg-amber-400 text-wood-950 font-bold px-3 py-1.5 rounded-lg flex items-center gap-1 shadow">
+            <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add Team Message
+          </button>
+        </div>
+
+        <!-- Add Message Inline Form -->
+        <div id="add-message-box" class="hidden mb-6 p-4 bg-amber-50/60 border border-amber-200 rounded-xl space-y-3">
+          <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Add Colleague / Team Message</h3>
+          <div class="grid sm:grid-cols-2 gap-3">
+            <input type="text" id="new-msg-name" placeholder="Author Name (e.g. Josh M.)" class="text-xs px-3 py-2 border rounded-lg bg-white" />
+            <input type="text" id="new-msg-role" placeholder="Role / Team (e.g. Dev Team)" class="text-xs px-3 py-2 border rounded-lg bg-white" />
+          </div>
+          <textarea id="new-msg-text" rows="2" placeholder="Write their parting message..." class="w-full text-xs px-3 py-2 border rounded-lg bg-white"></textarea>
+          <div class="flex gap-2">
+            <button onclick="addTeamMessage()" class="bg-wood-900 text-amber-200 text-xs font-bold px-4 py-1.5 rounded-lg">Save Message</button>
+            <button onclick="toggleAddMessageModal()" class="bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-lg">Cancel</button>
+          </div>
+        </div>
+
+        <div id="admin-messages-list" class="space-y-3"></div>
+      </div>
+
+      <!-- GALLERY PHOTOS MANAGER -->
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+        <div class="flex items-center justify-between mb-4 border-b border-slate-100 pb-3">
+          <div class="flex items-center gap-2">
+            <i data-lucide="image" class="w-5 h-5 text-amber-600"></i>
+            <h2 class="text-base font-bold text-slate-900">Gallery Photos</h2>
+          </div>
+          <button onclick="toggleAddPhotoModal()" class="text-xs bg-amber-500 hover:bg-amber-400 text-wood-950 font-bold px-3 py-1.5 rounded-lg flex items-center gap-1">
+            <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add Image
+          </button>
+        </div>
+
+        <div id="add-photo-box" class="hidden mb-6 p-4 bg-amber-50/60 border border-amber-200 rounded-xl space-y-3">
+          <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">New Gallery Photo</h3>
+          <div class="grid sm:grid-cols-2 gap-3">
+            <input type="url" id="new-photo-url" placeholder="Image URL (https://...)" class="text-xs px-3 py-2 border rounded-lg bg-white" />
+            <input type="text" id="new-photo-caption" placeholder="Caption" class="text-xs px-3 py-2 border rounded-lg bg-white" />
+          </div>
+          <div class="flex gap-2">
+            <button onclick="addGalleryPhoto()" class="bg-wood-900 text-amber-200 text-xs font-bold px-4 py-1.5 rounded-lg">Save Image</button>
+            <button onclick="toggleAddPhotoModal()" class="bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-lg">Cancel</button>
+          </div>
+        </div>
+
+        <div id="admin-photos-list" class="grid grid-cols-2 sm:grid-cols-4 gap-4"></div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- MODAL: EDIT MESSAGE -->
+  <div id="edit-message-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between border-b pb-3">
+        <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+          <i data-lucide="edit-3" class="w-4 h-4 text-amber-600"></i> Edit Farewell Message
+        </h3>
+        <button onclick="closeEditMessageModal()" class="text-slate-400 hover:text-slate-600">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+      <form onsubmit="submitMessageEdit(event)" class="space-y-3">
+        <input type="hidden" id="edit-message-id" />
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Author Name</label>
+            <input type="text" id="edit-message-name" required class="w-full text-xs px-3 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Role / Team</label>
+            <input type="text" id="edit-message-role" required class="w-full text-xs px-3 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none" />
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Message</label>
+          <textarea id="edit-message-text" rows="4" required class="w-full text-xs px-3 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none"></textarea>
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeEditMessageModal()" class="text-xs px-4 py-2 border rounded-lg font-semibold text-slate-600 hover:bg-slate-50">Cancel</button>
+          <button type="submit" class="text-xs px-4 py-2 bg-amber-500 hover:bg-amber-400 text-wood-950 font-bold rounded-lg shadow">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: EDIT PHOTO -->
+  <div id="edit-photo-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between border-b pb-3">
+        <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+          <i data-lucide="edit-3" class="w-4 h-4 text-amber-600"></i> Edit Photo
+        </h3>
+        <button onclick="closeEditPhotoModal()" class="text-slate-400 hover:text-slate-600">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+      <form onsubmit="submitPhotoEdit(event)" class="space-y-3">
+        <input type="hidden" id="edit-photo-index" />
+        <div>
+          <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Image URL</label>
+          <input type="url" id="edit-photo-url" required class="w-full text-xs px-3 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none" />
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Caption</label>
+          <input type="text" id="edit-photo-caption" required class="w-full text-xs px-3 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none" />
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeEditPhotoModal()" class="text-xs px-4 py-2 border rounded-lg font-semibold text-slate-600 hover:bg-slate-50">Cancel</button>
+          <button type="submit" class="text-xs px-4 py-2 bg-amber-500 hover:bg-amber-400 text-wood-950 font-bold rounded-lg shadow">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // AUTH LOGIC
+    function checkAuth() {
+      if (sessionStorage.getItem('pima_admin_logged') === 'true') {
+        document.getElementById('login-gate').classList.add('hidden');
+        document.getElementById('admin-app').classList.remove('hidden');
+        loadState();
+      } else {
+        document.getElementById('login-gate').classList.remove('hidden');
+        document.getElementById('admin-app').classList.add('hidden');
+      }
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const pass = document.getElementById('admin-pass').value.trim();
+      if (pass === 'pima2026' || pass === 'admin123') {
+        sessionStorage.setItem('pima_admin_logged', 'true');
+        document.getElementById('login-error').classList.add('hidden');
+        checkAuth();
+      } else {
+        document.getElementById('login-error').classList.remove('hidden');
+      }
+    }
+
+    function handleLogout() {
+      sessionStorage.removeItem('pima_admin_logged');
+      checkAuth();
+    }
+
+    // STATE MANAGEMENT
+    const defaultData = {
+      visibility: { hero: true, videos: true, photos: true, messages: true },
+      hero: {
+        headline: "Cheers to the Next Track, Sir Dave! 🎸",
+        quote: "Dave, thank you for all the energy and dedication you brought to PIMA through the years. We are super excited for where your career takes you next—rock on!"
+      },
+      video: {
+        ownerUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        posterUrl: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80"
+      },
+      photos: [
+        { url: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=500&q=80", caption: "Team Sprints & Planning" },
+        { url: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=500&q=80", caption: "Team Outings & Celebrations" },
+        { url: "https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=500&q=80", caption: "Coffee Breaks & Discussions" },
+        { url: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=500&q=80", caption: "Project Launch Milestones" }
+      ],
+      messages: [
+        { id: 1, name: "Engr. Alex", role: "Frontend Developer", text: "Thank you so much Sir Dave for all the patience and technical guidance mula nung nag-umpisa kami sa team. All the best po sa next venture niyo!" },
+        { id: 2, name: "Claire", role: "UI/UX Designer", text: "Mamimiss namin yung jokes at coffee discussions tuwing hapon Sir Dave! Salamat sa walang kupas na good vibes!" },
+        { id: 3, name: "Joshua & Tech Team", role: "Engineering Team", text: "Sir Dave, napakalaking tulong mo sa paghubog ng PIMA. Solid mentor and true friend to all of us. Padayon po!" }
+      ]
+    };
+
+    function loadState() {
+      const state = JSON.parse(localStorage.getItem('pima_tribute_config')) || defaultData;
+
+      document.getElementById('show-hero').checked = state.visibility.hero;
+      document.getElementById('show-videos').checked = state.visibility.videos;
+      document.getElementById('show-photos').checked = state.visibility.photos;
+      document.getElementById('show-messages').checked = state.visibility.messages;
+
+      document.getElementById('hero-headline').value = state.hero.headline;
+      document.getElementById('owner-quote').value = state.hero.quote;
+      document.getElementById('owner-video-url').value = state.video.ownerUrl;
+      document.getElementById('owner-poster-url').value = state.video.posterUrl;
+
+      renderPhotosList(state.photos);
+      renderMessagesList(state.messages);
+    }
+
+    function saveVisibility() {
+      const state = JSON.parse(localStorage.getItem('pima_tribute_config')) || defaultData;
+      state.visibility = {
+        hero: document.getElementById('show-hero').checked,
+        videos: document.getElementById('show-videos').checked,
+        photos: document.getElementById('show-photos').checked,
+        messages: document.getElementById('show-messages').checked,
+      };
+      localStorage.setItem('pima_tribute_config', JSON.stringify(state));
+    }
+
+    function saveHeroContent(e) {
+      e.preventDefault();
+      const state = JSON.parse(localStorage.getItem('pima_tribute_config')) || defaultData;
+      state.hero.headline = document.getElementById('hero-headline').value;
+      state.hero.quote = document.getElementById('owner-quote').value;
+      localStorage.setItem('pima_tribute_config', JSON.stringify(state));
+      alert('Hero headline & quote saved!');
+    }
+
+    function saveVideoSettings(e) {
+      e.preventDefault();
+      const state = JSON.parse(localStorage.getItem('pima_tribute_config')) || defaultData;
+      state.video.ownerUrl = document.getElementById('owner-video-url').value;
+      state.video.posterUrl = document.getElementById('owner-poster-url').value;
+      localStorage.setItem('pima_tribute_config', JSON.stringify(state));
+      alert('Video settings saved!');
+    }
+
+    // MESSAGE ACTIONS
+    function toggleAddMessageModal() {
+      document.getElementById('add-message-box').classList.toggle('hidden');
+    }
+
+    function addTeamMessage() {
+      const name = document.getElementById('new-msg-name').value.trim();
+      const role = document.getElementById('new-msg-role').value.trim();
+      const text = document.getElementById('new-msg-text').value.trim();
+      if (!name || !text) return;
+
+      const state = JSON.parse(localStorage.getItem('pima_tribute_config')) || defaultData;
+      state.messages.unshift({ id: Date.now(), name, role: role || 'Team Member', text });
+      localStorage.setItem('pima_tribute_config', JSON.stringify(state));
+
+      document.getElementById('new-msg-name').value = '';
+      document.getElementById('new-msg-role').value = '';
+      document.getElementById('new-msg-text').value = '';
+      toggleAddMessageModal();
+      renderMessagesList(state.messages);
+    }
+
+    function openEditMessageModal(id) {
+      const state = JSON.parse(localStorage.getItem('pima_tribute_config')) || defaultData;
+      const message = state.messages.find(m => m.id === id);
+      if (!message) return;
+
+      document.getElementById('edit-message-id').value = message.id;
+      document.getElementById('edit-message-name').value = message.name;
+      document.getElementById('edit-message-role').value = message.role;
+      document.getElementById('edit-message-text').value = message.text;
+      document.getElementById('edit-message-modal').classList.remove('hidden');
+    }
+
+    function closeEditMessageModal() {
+      document.getElementById('edit-message-modal').classList.add('hidden');
+    }
+
+    function submitMessageEdit(e) {
+      e.preventDefault();
+      const id = parseInt(document.getElementById('edit-message-id').value);
+      const name = document.getElementById('edit-message-name').value.trim();
+      const role = document.getElementById('edit-message-role').value.trim();
+      const text = document.getElementById('edit-message-text').value.trim();
+
+      const state = JSON.parse(localStorage.getItem('pima_tribute_config')) || defaultData;
+      const index = state.messages.findIndex(m => m.id === id);
+      if (index !== -1) {
+        state.messages[index] = { ...state.messages[index], name, role, text };
+        localStorage.setItem('pima_tribute_config', JSON.stringify(state));
+        renderMessagesList(state.messages);
+        closeEditMessageModal();
+      }
+    }
+
+    function deleteMessage(id) {
+      if (!confirm("Are you sure you want to delete this message?")) return;
+      const state = JSON.parse(localStorage.getItem('pima_tribute_config')) || defaultData;
+      state.messages = state.messages.filter(m => m.id !== id);
+      localStorage.setItem('pima_tribute_config', JSON.stringify(state));
+      renderMessagesList(state.messages);
+    }
+
+    function renderMessagesList(messages) {
+      const container = document.getElementById('admin-messages-list');
+      if (messages.length === 0) {
+        container.innerHTML = `<p class="text-xs text-slate-400 py-3">No messages added yet.</p>`;
+        return;
+      }
+      container.innerHTML = messages.map(m => `
+        <div class="p-3.5 rounded-xl border border-slate-200 bg-slate-50 flex items-start justify-between gap-4">
+          <div class="flex-1">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold text-slate-900">${escapeHtml(m.name)}</span>
+              <span class="text-[10px] text-slate-500 font-medium">(${escapeHtml(m.role)})</span>
+            </div>
+            <p class="text-xs text-slate-700 mt-1">"${escapeHtml(m.text)}"</p>
+          </div>
+          <div class="flex items-center gap-1">
+            <button onclick="openEditMessageModal(${m.id})" class="text-slate-500 hover:text-amber-600 p-1.5 rounded transition" title="Edit">
+              <i data-lucide="pencil" class="w-4 h-4"></i>
+            </button>
+            <button onclick="deleteMessage(${m.id})" class="text-slate-400 hover:text-red-600 p-1.5 rounded transition" title="Delete">
+              <i data-lucide="trash-2" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    // PHOTO ACTIONS
+    function toggleAddPhotoModal() {
+      document.getElementById('add-photo-box').classList.toggle('hidden');
+    }
+
+    function addGalleryPhoto() {
+      const url = document.getElementById('new-photo-url').value.trim();
+      const caption = document.getElementById('new-photo-caption').value.trim();
+      if (!url) return;
+
+      const state = JSON.parse(localStorage.getItem('pima_tribute_config')) || defaultData;
+      state.photos.push({ url, caption: caption || 'Memory Highlight' });
+      localStorage.setItem('pima_tribute_config', JSON.stringify(state));
+
+      document.getElementById('new-photo-url').value = '';
+      document.getElementById('new-photo-caption').value = '';
+      toggleAddPhotoModal();
+      renderPhotosList(state.photos);
+    }
+
+    function openEditPhotoModal(index) {
+      const state = JSON.parse(localStorage.getItem('pima_tribute_config')) || defaultData;
+      const photo = state.photos[index];
+      if (!photo) return;
+
+      document.getElementById('edit-photo-index').value = index;
+      document.getElementById('edit-photo-url').value = photo.url;
+      document.getElementById('edit-photo-caption').value = photo.caption;
+      document.getElementById('edit-photo-modal').classList.remove('hidden');
+    }
+
+    function closeEditPhotoModal() {
+      document.getElementById('edit-photo-modal').classList.add('hidden');
+    }
+
+    function submitPhotoEdit(e) {
+      e.preventDefault();
+      const index = parseInt(document.getElementById('edit-photo-index').value);
+      const url = document.getElementById('edit-photo-url').value.trim();
+      const caption = document.getElementById('edit-photo-caption').value.trim();
+
+      const state = JSON.parse(localStorage.getItem('pima_tribute_config')) || defaultData;
+      if (state.photos[index]) {
+        state.photos[index] = { url, caption };
+        localStorage.setItem('pima_tribute_config', JSON.stringify(state));
+        renderPhotosList(state.photos);
+        closeEditPhotoModal();
+      }
+    }
+
+    function deletePhoto(index) {
+      if (!confirm("Are you sure you want to delete this photo?")) return;
+      const state = JSON.parse(localStorage.getItem('pima_tribute_config')) || defaultData;
+      state.photos.splice(index, 1);
+      localStorage.setItem('pima_tribute_config', JSON.stringify(state));
+      renderPhotosList(state.photos);
+    }
+
+    function renderPhotosList(photos) {
+      const container = document.getElementById('admin-photos-list');
+      container.innerHTML = photos.map((p, i) => `
+        <div class="relative group rounded-xl overflow-hidden border border-slate-200 aspect-square bg-slate-900">
+          <img src="${p.url}" alt="${p.caption}" class="w-full h-full object-cover opacity-80" />
+          <div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition p-2.5 flex flex-col justify-between">
+            <span class="text-[10px] text-white font-semibold truncate">${p.caption}</span>
+            <div class="flex items-center gap-1.5 self-end">
+              <button onclick="openEditPhotoModal(${i})" class="bg-amber-500 hover:bg-amber-400 text-wood-950 text-[10px] font-bold py-1 px-2 rounded flex items-center gap-1">
+                <i data-lucide="edit-2" class="w-3 h-3"></i> Edit
+              </button>
+              <button onclick="deletePhoto(${i})" class="bg-red-600 hover:bg-red-500 text-white text-[10px] font-bold py-1 px-2 rounded flex items-center gap-1">
+                <i data-lucide="trash" class="w-3 h-3"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    function escapeHtml(str) {
+      return String(str).replace(/[&<>"']/g, function (m) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
+      });
+    }
+
+    window.onload = checkAuth;
+  </script>
+</body>
+</html>
