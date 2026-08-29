@@ -145,8 +145,10 @@
       </div>
     </div>
 
-    <!-- TEAM VIDEO GRID -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto">
+    <!-- TEAM VIDEO GRID (4 PORTRAIT CARDS) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+      
+      <!-- 1. Chrisel -->
       <div class="wood-card rounded-2xl overflow-hidden shadow-sm border border-wood-200 flex flex-col">
         <div class="portrait-video bg-wood-950 relative">
           <video controls playsinline class="w-full h-full object-cover">
@@ -162,6 +164,7 @@
         </div>
       </div>
 
+      <!-- 2. Sam & Daniel -->
       <div class="wood-card rounded-2xl overflow-hidden shadow-sm border border-wood-200 flex flex-col">
         <div class="portrait-video bg-wood-950 relative">
           <video controls playsinline class="w-full h-full object-cover">
@@ -177,6 +180,7 @@
         </div>
       </div>
 
+      <!-- 3. Terrenze -->
       <div class="wood-card rounded-2xl overflow-hidden shadow-sm border border-wood-200 flex flex-col">
         <div class="portrait-video bg-wood-950 relative">
           <video controls playsinline class="w-full h-full object-cover">
@@ -191,6 +195,23 @@
           <div class="text-[10px] text-amber-700 font-semibold uppercase tracking-wider mt-3 font-cinzel">Frontend Dev / UI</div>
         </div>
       </div>
+
+      <!-- 4. Nick -->
+      <div class="wood-card rounded-2xl overflow-hidden shadow-sm border border-wood-200 flex flex-col">
+        <div class="portrait-video bg-wood-950 relative">
+          <video controls playsinline class="w-full h-full object-cover">
+            <source src="assets/nick.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div class="p-4 bg-white flex-1 flex flex-col justify-between border-t border-wood-100">
+          <div>
+            <h4 class="font-bold text-wood-950 text-sm">Nick</h4>
+            <p class="text-xs text-stone-600 mt-1">"Best wishes and good luck sa bagong venture Sir Dave!"</p>
+          </div>
+          <div class="text-[10px] text-amber-700 font-semibold uppercase tracking-wider mt-3 font-cinzel">PIMA Team</div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -233,7 +254,6 @@
   <script>
     lucide.createIcons();
 
-    // ALL 11 IMAGES FROM YOUR DIRECTORY
     const allImages = [
       { url: "images/1.png", caption: "Goodbye Sir Dave!" },
       { url: "images/674164113_1354631190054994_1253332850743282868_n.jpg", caption: "PIMA Team Bonding" },
@@ -262,12 +282,12 @@
       messages: [
         { id: 1, name: "Chrisel", role: "PIMA Team", text: "Thank you so much Sir Dave for all the guidance and patience! Good luck on your next journey!" },
         { id: 2, name: "Sam & Daniel", role: "PIMA Team", text: "Mamimiss namin yung jokes at kwentuhan tuwing hapon Sir Dave! Salamat sa laging maaasahang tulong." },
-        { id: 3, name: "Terrenze", role: "Frontend Dev / UI", text: "Sir Dave, napakalaking tulong mo sa paghubog ng projects at ng team. Solid mentor and true friend to all of us. Padayon po!" }
+        { id: 3, name: "Terrenze", role: "Frontend Dev / UI", text: "Sir Dave, napakalaking tulong mo sa paghubog ng projects at ng team. Solid mentor and true friend to all of us. Padayon po!" },
+        { id: 4, name: "Nick", role: "PIMA Team", text: "Salamat sa tulong at gabay lagi Sir Dave. Best wishes sa bagong tatahaking landas!" }
       ]
     };
 
     function syncState() {
-      // Overwrite local storage cache to display the full 11 images
       let state = JSON.parse(localStorage.getItem('pima_tribute_config'));
       if (!state || !state.photos || state.photos.length !== allImages.length) {
         state = defaultData;
@@ -295,7 +315,6 @@
         videoEl.load();
       }
 
-      // Render all 11 images
       const photosGrid = document.getElementById('live-photos-grid');
       photosGrid.innerHTML = state.photos.map(p => `
         <div class="group relative rounded-xl overflow-hidden aspect-square bg-wood-950 shadow-sm border border-wood-300">
