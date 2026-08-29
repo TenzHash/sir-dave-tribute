@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PIMA Tribute Admin | Secure Control Panel</title>
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpeg" href="assets/logo.jpg" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@700&display=swap" rel="stylesheet">
@@ -33,12 +36,10 @@
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans antialiased min-h-screen">
 
-  <!-- 1. AUTHENTICATION / LOGIN SCREEN (Visible when logged out) -->
+  <!-- AUTHENTICATION / LOGIN SCREEN -->
   <div id="login-gate" class="fixed inset-0 z-50 bg-wood-950 flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl max-w-sm w-full p-8 shadow-2xl border border-slate-200 text-center">
-      <div class="w-12 h-12 bg-amber-500 rounded-full flex items-center justify-center mx-auto mb-4 text-wood-950 font-cinzel font-bold text-xl">
-        P
-      </div>
+      <img src="assets/logo.jpg" alt="PIMA Logo" class="w-14 h-14 rounded-full object-cover mx-auto mb-4 border-2 border-amber-500 shadow" />
       <h2 class="text-xl font-bold font-cinzel text-slate-900">Admin Authentication</h2>
       <p class="text-xs text-slate-500 mt-1 mb-6">Enter password to manage Sir Dave's tribute page.</p>
 
@@ -54,13 +55,13 @@
     </div>
   </div>
 
-  <!-- 2. MAIN ADMIN DASHBOARD (Hidden until authenticated) -->
+  <!-- MAIN ADMIN DASHBOARD -->
   <div id="admin-app" class="hidden">
     <!-- NAVBAR -->
     <nav class="bg-wood-950 text-white border-b border-wood-800 px-6 py-4 sticky top-0 z-40">
       <div class="max-w-6xl mx-auto flex items-center justify-between">
         <div class="flex items-center gap-3">
-          <span class="w-8 h-8 rounded-full bg-amber-500 text-wood-950 font-cinzel font-bold flex items-center justify-center text-sm">P</span>
+          <img src="assets/logo.jpg" alt="PIMA Logo" class="w-8 h-8 rounded-full object-cover border border-amber-500/80 shadow" />
           <div>
             <h1 class="text-sm font-bold text-amber-200">PIMA Tribute Master Control</h1>
             <p class="text-[10px] text-slate-400">Managing live content for Sir Dave's Page</p>
@@ -151,11 +152,11 @@
           <form onsubmit="saveVideoSettings(event)" class="space-y-4">
             <div>
               <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Owner Video URL (MP4 / Web Video)</label>
-              <input type="url" id="owner-video-url" class="w-full text-xs px-3 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none" />
+              <input type="text" id="owner-video-url" class="w-full text-xs px-3 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none" />
             </div>
             <div>
               <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Video Poster Image URL</label>
-              <input type="url" id="owner-poster-url" class="w-full text-xs px-3 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none" />
+              <input type="text" id="owner-poster-url" class="w-full text-xs px-3 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none" />
             </div>
             <button type="submit" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-4 py-2 rounded-lg transition">
               Save Video Source
@@ -164,7 +165,7 @@
         </div>
       </div>
 
-      <!-- TEAM MESSAGES MANAGER (ADD / EDIT / DELETE) -->
+      <!-- TEAM MESSAGES MANAGER -->
       <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
         <div class="flex items-center justify-between mb-4 border-b border-slate-100 pb-3">
           <div class="flex items-center gap-2">
@@ -176,7 +177,6 @@
           </button>
         </div>
 
-        <!-- Add Message Inline Form -->
         <div id="add-message-box" class="hidden mb-6 p-4 bg-amber-50/60 border border-amber-200 rounded-xl space-y-3">
           <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Add Colleague / Team Message</h3>
           <div class="grid sm:grid-cols-2 gap-3">
@@ -208,7 +208,7 @@
         <div id="add-photo-box" class="hidden mb-6 p-4 bg-amber-50/60 border border-amber-200 rounded-xl space-y-3">
           <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">New Gallery Photo</h3>
           <div class="grid sm:grid-cols-2 gap-3">
-            <input type="url" id="new-photo-url" placeholder="Image URL (https://...)" class="text-xs px-3 py-2 border rounded-lg bg-white" />
+            <input type="text" id="new-photo-url" placeholder="Image Path/URL (e.g. assets/photo1.jpg)" class="text-xs px-3 py-2 border rounded-lg bg-white" />
             <input type="text" id="new-photo-caption" placeholder="Caption" class="text-xs px-3 py-2 border rounded-lg bg-white" />
           </div>
           <div class="flex gap-2">
@@ -272,8 +272,8 @@
       <form onsubmit="submitPhotoEdit(event)" class="space-y-3">
         <input type="hidden" id="edit-photo-index" />
         <div>
-          <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Image URL</label>
-          <input type="url" id="edit-photo-url" required class="w-full text-xs px-3 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none" />
+          <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Image URL / Path</label>
+          <input type="text" id="edit-photo-url" required class="w-full text-xs px-3 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none" />
         </div>
         <div>
           <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Caption</label>
@@ -290,7 +290,6 @@
   <script>
     lucide.createIcons();
 
-    // AUTH LOGIC
     function checkAuth() {
       if (sessionStorage.getItem('pima_admin_logged') === 'true') {
         document.getElementById('login-gate').classList.add('hidden');
@@ -319,7 +318,6 @@
       checkAuth();
     }
 
-    // STATE MANAGEMENT
     const defaultData = {
       visibility: { hero: true, videos: true, photos: true, messages: true },
       hero: {
@@ -327,8 +325,8 @@
         quote: "Dave, thank you for all the energy and dedication you brought to PIMA through the years. We are super excited for where your career takes you next—rock on!"
       },
       video: {
-        ownerUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-        posterUrl: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80"
+        ownerUrl: "assets/sir_john.mp4",
+        posterUrl: ""
       },
       photos: [
         { url: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=500&q=80", caption: "Team Sprints & Planning" },
@@ -337,9 +335,9 @@
         { url: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=500&q=80", caption: "Project Launch Milestones" }
       ],
       messages: [
-        { id: 1, name: "Engr. Alex", role: "Frontend Developer", text: "Thank you so much Sir Dave for all the patience and technical guidance mula nung nag-umpisa kami sa team. All the best po sa next venture niyo!" },
-        { id: 2, name: "Claire", role: "UI/UX Designer", text: "Mamimiss namin yung jokes at coffee discussions tuwing hapon Sir Dave! Salamat sa walang kupas na good vibes!" },
-        { id: 3, name: "Joshua & Tech Team", role: "Engineering Team", text: "Sir Dave, napakalaking tulong mo sa paghubog ng PIMA. Solid mentor and true friend to all of us. Padayon po!" }
+        { id: 1, name: "Chrisel", role: "PIMA Team", text: "Thank you so much Sir Dave for all the guidance and patience! Good luck on your next journey!" },
+        { id: 2, name: "Sam & Daniel", role: "PIMA Team", text: "Mamimiss namin yung jokes at kwentuhan tuwing hapon Sir Dave! Salamat sa laging maaasahang tulong." },
+        { id: 3, name: "Terrenze", role: "Frontend Dev / UI", text: "Sir Dave, napakalaking tulong mo sa paghubog ng projects at ng team. Solid mentor and true friend to all of us. Padayon po!" }
       ]
     };
 
@@ -389,7 +387,6 @@
       alert('Video settings saved!');
     }
 
-    // MESSAGE ACTIONS
     function toggleAddMessageModal() {
       document.getElementById('add-message-box').classList.toggle('hidden');
     }
@@ -480,7 +477,6 @@
       lucide.createIcons();
     }
 
-    // PHOTO ACTIONS
     function toggleAddPhotoModal() {
       document.getElementById('add-photo-box').classList.toggle('hidden');
     }
